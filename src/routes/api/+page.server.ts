@@ -1,12 +1,19 @@
 import type { PageServerLoad, Actions } from './$types'
 
-export const load = (async ({ fetch }) => {
+export const load = (async ({ fetch, params }) => {
 	async function getItem() {
 		const res = await fetch('/api/items')
 		const data = await res.json()
 		return data
 	}
-	return { item: getItem() }
+
+	async function getTweet() {
+		const res = await fetch(`/api/tweets/${params.id}`)
+		const data = await res.json()
+		return data
+	}
+
+	return { item: getItem(), tweet: getTweet() }
 }) satisfies PageServerLoad
 
 export const actions = {

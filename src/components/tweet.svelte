@@ -3,18 +3,19 @@
 
 	import Icon from '$root/components/icon.svelte'
 	import type { TweetType } from '$root/types'
+	import { enhance } from '$app/forms'
 
 	export let tweet: TweetType
 </script>
 
 <article class="tweet-container" transition:fade>
-	<a class="avatar" href="/home/profile/{tweet.name}">
+	<a class="avatar" href="/{tweet.name}">
 		<img width="140" height="140" src={tweet.avatar} alt={tweet.name} />
 	</a>
 
 	<div class="tweet-details">
 		<div>
-			<a href="/home/profile/{tweet.name}" class="user">
+			<a href="/{tweet.name}" class="user">
 				{tweet.name}
 			</a>
 			<span class="handle">{tweet.handle}</span>
@@ -27,7 +28,7 @@
 			</div>
 
 			<div class="actions">
-				<form action="/home/like" method="post">
+				<form action="?/likeTweet" method="post" use:enhance>
 					<input type="hidden" name="id" value={tweet.id} />
 					<button class="btn like" title="Like" type="submit">
 						<div class="circle">
@@ -51,7 +52,7 @@
 					</div>
 				</a>
 
-				<form action="/home?_method=delete" method="post">
+				<form action="?/deleteTweet" method="post" use:enhance>
 					<input type="hidden" name="id" value={tweet.id} />
 					<button aria-label="Remove tweet" class="btn remove" title="Remove" type="submit">
 						<div class="circle">

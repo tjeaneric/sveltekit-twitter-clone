@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Tweet from '$root/components/tweet.svelte'
+	import Compose from '$root/components/compose.svelte'
 	import type { PageData } from './$types'
 
 	export let data: PageData
@@ -10,6 +11,8 @@
 </svelte:head>
 
 <h1>Feed</h1>
+
+<Compose />
 
 {#each data.tweets as tweet (tweet.id)}
 	<Tweet {tweet} />

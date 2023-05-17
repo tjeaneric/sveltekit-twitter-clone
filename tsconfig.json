@@ -10,7 +10,7 @@
 		"sourceMap": true,
 		"strict": true,
 		"baseUrl": ".",
-		"paths": { "$root/*": ["./src/*"] }
+		"paths": { "$root/*": ["./src/*"], "$lib": ["./src/lib"], "$lib/*": ["./src/lib/*"] }
 	}
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	//

@@ -1,12 +1,12 @@
 import type { Actions, PageServerLoad } from './$types'
 
-export const load = (async ({ fetch }) => {
-	async function getTweets() {
-		const res = await fetch('/api/tweets')
+export const load = (async ({ fetch, params }) => {
+	async function getUser() {
+		const res = await fetch(`/api/users/${params.user}`)
 		const data = await res.json()
 		return data
 	}
-	return { tweets: getTweets() }
+	return { userData: getUser() }
 }) satisfies PageServerLoad
 
 export const actions = {

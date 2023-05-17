@@ -3,9 +3,11 @@ import { json } from '@sveltejs/kit'
 import prisma from '$lib/prisma'
 import { timePosted } from '$root/lib/date'
 
-export const GET = async () => {
-	// get the tweets and the user data (Prisma 😍)
-	const data = await prisma.tweet.findMany({
+export const GET = async ({ params }) => {
+	const profile = await prisma.user.findFirst({ where: { name: params.name } })
+
+	const tweets = await prisma.tweet.findMany({
+		where: { user: { id: profile?.id } },
 		include: { user: true },
 		orderBy: { posted: 'desc' }
 	})
@@ -19,9 +21,11 @@ export const GET = async () => {
 	// we just want an array of the ids
 	const likedTweets = Object.keys(liked).map((key) => liked[key].tweetId)
 
-	// we can shape the data however we want
-	// so our user doesn't have to pay the cost for it
-	const tweets = data.map((tweet) => {
+	if (!profile || !tweets || tweets.length === 0) {
+		return json({ status: 404 })
+	}
+
+	const userTweets = tweets.map((tweet) => {
 		return {
 			id: tweet.id,
 			content: tweet.content,
@@ -35,11 +39,7 @@ export const GET = async () => {
 		}
 	})
 
-	if (!tweets) {
-		return { status: 400 }
-	}
-
-	return json(tweets, { status: 200 })
+	return json({ profile, tweets: userTweets })
 }
 
 export const POST = async ({ request }) => {
