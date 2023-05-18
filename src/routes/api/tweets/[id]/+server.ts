@@ -1,6 +1,31 @@
 import { json } from '@sveltejs/kit'
 
 import prisma from '$lib/prisma'
+import { timePosted } from '$root/lib/date.js'
+
+export const GET = async ({ params }) => {
+	const { id } = params
+	const tweet = await prisma.tweet.findFirst({ where: { id }, include: { user: true } })
+	const liked = await prisma.liked.findMany({
+		where: { userId: tweet?.userId },
+		select: { tweetId: true }
+	})
+
+	const likedTweets = Object.keys(liked).map((k) => liked[k].tweetId)
+
+	const userTwet = {
+		id: tweet?.id,
+		content: tweet?.content,
+		likes: tweet?.likes,
+		posted: timePosted(tweet?.posted),
+		url: tweet?.url,
+		avatar: tweet?.user.avatar,
+		handle: tweet?.user.handle,
+		name: tweet?.user.name,
+		liked: likedTweets.includes(tweet?.id)
+	}
+	return json(userTwet, {status:200})
+}
 
 export const PATCH = async ({ request }) => {
 	const tweet = await request.json()

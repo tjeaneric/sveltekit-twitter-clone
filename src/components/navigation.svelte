@@ -20,21 +20,21 @@
 					</a>
 				</li>
 
-				<li class:active={path === '/home/profile/matia'}>
-					<a href="/profile/matia">
+				<li class:active={path === '/joyofcodedev'}>
+					<a href="/joyofcodedev">
 						<Icon width="32" height="32" name="profile" />
 						<span>Profile</span>
 					</a>
 				</li>
 
-				<li class:active={path === '/home/settings'}>
+				<li class:active={path === '/settings'}>
 					<a href="/settings">
 						<Icon width="32" height="32" name="settings" />
 						<span>Settings</span>
 					</a>
 				</li>
 
-				<li class:active={path === '/home/about'}>
+				<li class:active={path === '/about'}>
 					<a href="/about">
 						<Icon width="32" height="32" name="about" />
 						<span>About</span>

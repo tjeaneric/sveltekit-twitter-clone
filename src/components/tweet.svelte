@@ -9,13 +9,13 @@
 </script>
 
 <article class="tweet-container" transition:fade>
-	<a class="avatar" href="/{tweet.name}">
+	<a class="avatar" href="/{tweet.handle.slice(1)}">
 		<img width="140" height="140" src={tweet.avatar} alt={tweet.name} />
 	</a>
 
 	<div class="tweet-details">
 		<div>
-			<a href="/{tweet.name}" class="user">
+			<a href="/{tweet.handle.slice(1)}" class="user">
 				{tweet.name}
 			</a>
 			<span class="handle">{tweet.handle}</span>
@@ -46,7 +46,7 @@
 					</button>
 				</form>
 
-				<a href="/home/profile/{tweet.name}/status/{tweet.url}" class="permalink" title="Permalink">
+				<a href="/{tweet.name}/status/{tweet.id}" class="permalink" title="Permalink">
 					<div class="circle">
 						<Icon width="24" height="24" name="permalink" />
 					</div>

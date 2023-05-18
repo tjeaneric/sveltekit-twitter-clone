@@ -4,7 +4,7 @@ import prisma from '$lib/prisma'
 import { timePosted } from '$root/lib/date'
 
 export const GET = async ({ params }) => {
-	const profile = await prisma.user.findFirst({ where: { name: params.name } })
+	const profile = await prisma.user.findFirst({ where: { handle: `@${params.name}` } })
 
 	const tweets = await prisma.tweet.findMany({
 		where: { user: { id: profile?.id } },
