@@ -2,12 +2,16 @@
 	import '$root/styles/global.css'
 	import Navigation from '$root/components/navigation.svelte'
 	import Trending from '$root/components/trending.svelte'
+	import { page } from '$app/stores'
+	import Transition from '$root/components/transition.svelte'
 </script>
 
 <div class="container">
 	<Navigation />
 	<main class="feed">
-		<slot />
+		<Transition url={$page.url.pathname}>
+			<slot />
+		</Transition>
 	</main>
 	<Trending />
 </div>
